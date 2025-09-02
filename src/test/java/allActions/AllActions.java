@@ -85,7 +85,7 @@ public class AllActions {
     }
 
     public void quitTheWindow(){
-        driver.quit();
+        driver.quit() ;
     }
 
 
