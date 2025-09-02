@@ -1,31 +1,36 @@
 package naukri_automation.factory;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-public class Base {
-    protected static WebDriver driver;
+import java.io.File;
+import java.io.IOException;
 
-    public void initializeDriver() {
-        if (driver == null) {
-            System.out.println("Launching Chrome browser...");
+public class Base {
+        public static WebDriver driver;
+
+        public void initializeDriver() {
             driver = new ChromeDriver();
             driver.manage().window().maximize();
         }
-    }
 
-    public void quitDriver() {
-        if (driver != null) {
-            System.out.println("Closing browser...");
-            driver.quit();
-            driver = null;
+        public void quitDriver() {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+
+        public void highlight(WebElement element) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid red'", element);
+        }
+
+        // take screenshot
+        public void captureScreenshot(String fileName) throws IOException {
+            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            FileHandler.copy(src, new File("screenshots/" + fileName + ".png"));
         }
     }
 
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-}
