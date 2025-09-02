@@ -11,26 +11,26 @@ import java.io.IOException;
 
 public class Base {
         public static WebDriver driver;
+    public void initializeDriver() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
 
-        public void initializeDriver() {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
+    public void quitDriver() {
+        if (driver != null) {
+            driver.quit();
         }
-
-        public void quitDriver() {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-
-        public void highlight(WebElement element) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid red'", element);
-        }
-
-        // take screenshot
-        public void captureScreenshot(String fileName) throws IOException {
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            FileHandler.copy(src, new File("screenshots/" + fileName + ".png"));
-        }
+    }
+    public void highlight(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].style.border='3px solid red'", element);
+    }
+    public void captureScreenshot(String fileName) throws IOException {
+        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File dest = new File("screenshots/" + fileName + ".png");
+        dest.getParentFile().mkdirs();
+        FileHandler.copy(src, dest);
+        System.out.println("Screenshot saved at: " + dest.getAbsolutePath());
+    }
     }
 

@@ -5,6 +5,10 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import naukri_automation.factory.Base;
 import naukri_automation.pageObjectModel.LoginPage;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import java.io.IOException;
 
 public class Hooks extends Base {
     LoginPage loginPage;
@@ -21,12 +25,14 @@ public class Hooks extends Base {
         try {
             if (scenario.isFailed()) {
                 highlight(loginPage.emailField);
-                captureScreenshot(scenario.getName().replace(" ", "_"));  // save screenshot
+                final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+
+                scenario.attach(screenshot, "image/png", scenario.getName());
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            quitDriver();   // close browser
+            quitDriver();
         }
     }
 }
