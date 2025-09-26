@@ -35,6 +35,6 @@ public class Hooks extends Base {
 
     File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("cucumber-reports.html"));
-        quitDriver();
+       // quitDriver();
     }
 }

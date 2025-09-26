@@ -9,6 +9,7 @@ import naukri_automation.factory.Base;
 import naukri_automation.hooks.Hooks;
 import naukri_automation.pageObjectModel.LoginPage;
 import naukri_automation.pageObjectModel.ProfilePageExp;
+import naukri_automation.pageObjectModel.UploadResumeToNPage;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -18,6 +19,10 @@ import java.time.Duration;
 public class StepDefinition_Login {
     LoginPage loginPage;
     ProfilePageExp profilePageExp;
+    UploadResumeToNPage uploadResumeToNPage;
+
+
+
 
     @Given("login to naukri page with username n password")
     public void loginPage() throws IOException {
@@ -33,7 +38,21 @@ public class StepDefinition_Login {
     @When("complete the profile exp page and click on save")
     public void completeTheProfileExpPageAndClickOnSave() throws InterruptedException {
 
-        profilePageExp.closeChatOverlayIfPresent();
+        profilePageExp.closeChatOverlayIfPresent(Base.driver);
         profilePageExp.profilePage();
     }
+
+    @Then("upload the resume and headline")
+    public void uploadTheResume() {
+        uploadResumeToNPage = new UploadResumeToNPage(Base.driver);
+        //uploadResumeToNPage.uploadResume();
+        uploadResumeToNPage.resumeHeadLine();
+
+    }
+
+    @Then("update employment")
+    public void updateEmployment() {
+       uploadResumeToNPage.updateEmployment();
+    }
+
 }

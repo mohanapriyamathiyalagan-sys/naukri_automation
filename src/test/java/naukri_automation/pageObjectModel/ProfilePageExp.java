@@ -49,7 +49,7 @@ public class ProfilePageExp {
         PageFactory.initElements(driver, this);
     }
 
-    public void closeChatOverlayIfPresent() {
+    /*public void closeChatOverlayIfPresent() {
         List<WebElement> overlays = driver.findElements(chatOverlay);
         if (!overlays.isEmpty()) {
             try {
@@ -62,7 +62,34 @@ public class ProfilePageExp {
         } else {
             System.out.println("No chatbot overlay present.");
         }
+    }*/
+
+    public void closeChatOverlayIfPresent(WebDriver driver) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            List<WebElement> overlays = driver.findElements(By.cssSelector("div.chatbot_Overlay.show"));
+
+            if (!overlays.isEmpty()) {
+                System.out.println("Chatbot overlay detected. Trying to close it...");
+
+                // Try clicking close button inside overlay (if available)
+                List<WebElement> closeBtn = driver.findElements(By.cssSelector(".chatbot_Overlay.show .close"));
+                if (!closeBtn.isEmpty()) {
+                    closeBtn.get(0).click();
+                    wait.until(ExpectedConditions.invisibilityOf(overlays.get(0)));
+                } else {
+                    // If no close button → hide it with JS
+                    JavascriptExecutor js = (JavascriptExecutor) driver;
+                    js.executeScript("arguments[0].style.display='none';", overlays.get(0));
+                    System.out.println("Overlay hidden using JS");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("No overlay found or failed to close: " + e.getMessage());
+        }
     }
+
+
 
     public void profilePage() throws InterruptedException {
 
@@ -91,12 +118,14 @@ public class ProfilePageExp {
         action.sendKeys(inputBoxMon, Keys.ENTER).perform();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+        salary.clear();
 
         salary.sendKeys("5000000");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
-        action.sendKeys(salaryBreakdown, Keys.PAGE_DOWN).perform();
+        /*action.sendKeys(salaryBreakdown, Keys.PAGE_DOWN).perform();
         salaryBreakdown.click();
+        salaryBreakdown.clear();
 
         WebDriverWait wait2= new WebDriverWait(driver, Duration.ofSeconds(20));
 
@@ -108,16 +137,26 @@ public class ProfilePageExp {
         WebElement salaryBrk = driver.findElement(By.id("salaryBreakDownDDFor"));
         salaryBrk.clear();
 
-        salaryBrk.sendKeys("Fixed + Variable");
+        salaryBrk.sendKeys("Fixed");
+        action.sendKeys(dropdown, Keys.ENTER).perform();*/
 
+        WebElement salaryInput = driver.findElement(By.id("salaryBreakDownDDFor"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", salaryInput);
+        salaryInput.click();
+        List<WebElement> overlays = driver.findElements(By.cssSelector(".overlay-class"));
+        if (!overlays.isEmpty()) {
+            overlays.get(0).click();
+        }
 
-        action.sendKeys(dropdown, Keys.ENTER).perform();
-
-        WebElement fixedSalary = driver.findElement(By.xpath("//*[@id=\"fixedCtc_id\"]"));
+        /*WebElement fixedSalary = driver.findElement(By.xpath("//*[@id=\"fixedCtc_id\"]"));
+        fixedSalary.clear();
         fixedSalary.sendKeys("2005000");
 
+
         WebElement variableSalary = driver.findElement(By.xpath("//*[@id=\"variableCtc_id\"]"));
-        variableSalary.sendKeys("400000");
+        variableSalary.clear();
+        variableSalary.sendKeys("400000");*/
+
 
 
         availabilityDays.click();
