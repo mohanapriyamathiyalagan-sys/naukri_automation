@@ -26,7 +26,7 @@ public class UploadResumeToNPage {
     @FindBy(xpath = "//*[@id=\"companySugg\"]")
     WebElement currentCompanyName;
 
-    @FindBy(xpath = "//*[@id=\"designationSugg\"]")
+    @FindBy(xpath = "\"//li[@class='sugTouple']/div[text()='Quality Assurance Engineer 1']\"")
     WebElement jobTitle;
 
     @FindBy(id="startedYearFor")
@@ -117,20 +117,23 @@ public class UploadResumeToNPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", employmentWord);
         employmentWord.click();
 
-        currentCompanyName.clear();
-        currentCompanyName.sendKeys("Accenture");
-        action.sendKeys(jobTitle, Keys.ENTER).perform();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        //currentCompanyName.clear();
+        WebDriverWait wait5 = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement suggestion = wait5.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@id='sugDrp_companySugg']//li[@class='sugTouple']//div[text()='Accenture']")
+        ));
+        suggestion.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
 
         jobTitle.clear();
-        jobTitle.sendKeys("Quality Assurance Engineer 1");
-        action.sendKeys(jobTitle, Keys.ENTER).perform();
+        jobTitle.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
         startedYear.clear();
         startedYear.click();
-        startedYear.sendKeys("2019"); // type year
-        startedYear.sendKeys(Keys.ENTER);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); arguments[0].click();", startedYear);
+        //startedYear.sendKeys("2019"); // type year
+        //startedYear.sendKeys(Keys.ENTER);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
         startedMonth.click();
