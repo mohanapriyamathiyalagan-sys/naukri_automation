@@ -20,36 +20,6 @@ public class UploadResumeToNPage {
     @FindBy(xpath = "//*[@id=\"root\"]/div/div/span/div/div/div/div/div/div[2]/div[1]/div/div/ul/li[3]/span")
     WebElement resumeHeadLine;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div/span/div/div/div/div/div/div[2]/div[1]/div/div/ul/li[5]/a")
-    WebElement employmentWord;
-
-    @FindBy(xpath = "//*[@id=\"companySugg\"]")
-    WebElement currentCompanyName;
-
-    @FindBy(xpath = "\"//li[@class='sugTouple']/div[text()='Quality Assurance Engineer 1']\"")
-    WebElement jobTitle;
-
-    @FindBy(id="startedYearFor")
-    WebElement startedYear;
-
-    @FindBy(id="startedMonthFor")
-    WebElement startedMonth;
-
-    @FindBy(xpath = "//*[@id=\"totalAbsCtc_id\"]")
-    WebElement salary;
-
-    @FindBy(id="keySkillSugg")
-    WebElement skills;
-
-    @FindBy(id="jobDescription")
-    WebElement jobDescription;
-
-    @FindBy(id="noticePeriodFor")
-    WebElement noticePeriod;
-
-    @FindBy(id="submitEmployment")
-    WebElement saveButton;
-
 
     public UploadResumeToNPage(WebDriver driver){
         this.driver=driver;
@@ -96,72 +66,5 @@ public class UploadResumeToNPage {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         WebElement saveButton = driver.findElement(By.xpath("/html/body/div[6]/div[8]/div[2]/form/div[3]/div/button"));
         saveButton.click();
-    }
-
-    public void updateEmployment(){
-        Actions action = new Actions(driver);
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ltLayer.close")));
-
-        List<WebElement> overlays = driver.findElements(By.cssSelector(".ltLayer.close"));
-        if (!overlays.isEmpty() && overlays.get(0).isDisplayed()) {
-            overlays.get(0).click();
-        } else {
-            System.out.println("No visible overlay present, continuing...");
-        }
-        WebElement closeBtn = driver.findElement(By.cssSelector(".ltLayer.close"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
-
-
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", employmentWord);
-        employmentWord.click();
-
-        //currentCompanyName.clear();
-        WebDriverWait wait5 = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement suggestion = wait5.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//div[@id='sugDrp_companySugg']//li[@class='sugTouple']//div[text()='Accenture']")
-        ));
-        suggestion.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
-
-        jobTitle.clear();
-        jobTitle.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
-        startedYear.clear();
-        startedYear.click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); arguments[0].click();", startedYear);
-        //startedYear.sendKeys("2019"); // type year
-        //startedYear.sendKeys(Keys.ENTER);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
-        startedMonth.click();
-        startedMonth.clear();
-        startedMonth.sendKeys("Nov");
-        startedMonth.sendKeys(Keys.ENTER);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
-        salary.clear();
-        salary.sendKeys("50,00,000");
-        action.sendKeys(salary, Keys.ENTER).perform();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
-
-        skills.sendKeys("Selenium");
-        action.sendKeys(skills, Keys.ENTER).perform();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
-
-
-        jobDescription.sendKeys("Am an expert in Selenium+java, Api, Devops, Coding");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(80));
-        noticePeriod.sendKeys("1 Month");
-        action.sendKeys(noticePeriod, Keys.ENTER).perform();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(80));
-
-        saveButton.click();
-
-
-
-
     }
 }

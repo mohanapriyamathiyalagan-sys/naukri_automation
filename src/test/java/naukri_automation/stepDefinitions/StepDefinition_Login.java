@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import naukri_automation.factory.Base;
 import naukri_automation.hooks.Hooks;
+import naukri_automation.pageObjectModel.EmploymentUpdate;
 import naukri_automation.pageObjectModel.LoginPage;
 import naukri_automation.pageObjectModel.ProfilePageExp;
 import naukri_automation.pageObjectModel.UploadResumeToNPage;
@@ -20,6 +21,7 @@ public class StepDefinition_Login {
     LoginPage loginPage;
     ProfilePageExp profilePageExp;
     UploadResumeToNPage uploadResumeToNPage;
+    EmploymentUpdate employmentUpdate;
 
 
 
@@ -39,20 +41,21 @@ public class StepDefinition_Login {
     public void completeTheProfileExpPageAndClickOnSave() throws InterruptedException {
 
         profilePageExp.closeChatOverlayIfPresent(Base.driver);
-        profilePageExp.profilePage();
+        //profilePageExp.profilePage();
     }
 
     @Then("upload the resume and headline")
     public void uploadTheResume() {
         uploadResumeToNPage = new UploadResumeToNPage(Base.driver);
         //uploadResumeToNPage.uploadResume();
-        uploadResumeToNPage.resumeHeadLine();
+        // uploadResumeToNPage.resumeHeadLine();
 
     }
 
     @Then("update employment")
-    public void updateEmployment() {
-       uploadResumeToNPage.updateEmployment();
+    public void updateEmployment() throws InterruptedException {
+        employmentUpdate = new EmploymentUpdate(Base.driver);
+       employmentUpdate.updateEmployment();
     }
 
 }
