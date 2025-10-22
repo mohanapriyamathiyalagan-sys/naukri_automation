@@ -1,5 +1,6 @@
 package naukri_automation.pageObjectModel;
 
+import naukri_automation.factory.Base;
 import org.checkerframework.checker.units.qual.K;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -13,8 +14,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ProfilePageExp {
-    WebDriver driver;
+public class ProfilePageExp extends Base {
 
     By chatOverlay = By.cssSelector("div.chatbot_Overlay.show");
 
@@ -49,21 +49,6 @@ public class ProfilePageExp {
         PageFactory.initElements(driver, this);
     }
 
-    /*public void closeChatOverlayIfPresent() {
-        List<WebElement> overlays = driver.findElements(chatOverlay);
-        if (!overlays.isEmpty()) {
-            try {
-                WebElement closeBtn = overlays.get(0).findElement(By.cssSelector("button"));
-                closeBtn.click();
-                System.out.println("Chatbot closed ✅");
-            } catch (Exception e) {
-                System.out.println("Overlay found but no close button.");
-            }
-        } else {
-            System.out.println("No chatbot overlay present.");
-        }
-    }*/
-
     public void closeChatOverlayIfPresent(WebDriver driver) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -72,13 +57,12 @@ public class ProfilePageExp {
             if (!overlays.isEmpty()) {
                 System.out.println("Chatbot overlay detected. Trying to close it...");
 
-                // Try clicking close button inside overlay (if available)
                 List<WebElement> closeBtn = driver.findElements(By.cssSelector(".chatbot_Overlay.show .close"));
                 if (!closeBtn.isEmpty()) {
                     closeBtn.get(0).click();
                     wait.until(ExpectedConditions.invisibilityOf(overlays.get(0)));
                 } else {
-                    // If no close button → hide it with JS
+
                     JavascriptExecutor js = (JavascriptExecutor) driver;
                     js.executeScript("arguments[0].style.display='none';", overlays.get(0));
                     System.out.println("Overlay hidden using JS");

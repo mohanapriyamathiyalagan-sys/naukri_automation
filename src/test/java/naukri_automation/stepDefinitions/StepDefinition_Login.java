@@ -1,20 +1,14 @@
 package naukri_automation.stepDefinitions;
 
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import naukri_automation.factory.Base;
 import naukri_automation.hooks.Hooks;
-import naukri_automation.pageObjectModel.EmploymentUpdate;
-import naukri_automation.pageObjectModel.LoginPage;
-import naukri_automation.pageObjectModel.ProfilePageExp;
-import naukri_automation.pageObjectModel.UploadResumeToNPage;
-import org.openqa.selenium.WebDriver;
+import naukri_automation.pageObjectModel.*;
 
 import java.io.IOException;
-import java.time.Duration;
 
 
 public class StepDefinition_Login {
@@ -22,9 +16,9 @@ public class StepDefinition_Login {
     ProfilePageExp profilePageExp;
     UploadResumeToNPage uploadResumeToNPage;
     EmploymentUpdate employmentUpdate;
-
-
-
+    ResumeUpload resumeUpload;
+    ProfileSummary profileSummary;
+    UploadPhoto uploadPhoto;
 
     @Given("login to naukri page with username n password")
     public void loginPage() throws IOException {
@@ -41,7 +35,7 @@ public class StepDefinition_Login {
     public void completeTheProfileExpPageAndClickOnSave() throws InterruptedException {
 
         profilePageExp.closeChatOverlayIfPresent(Base.driver);
-        //profilePageExp.profilePage();
+      //  profilePageExp.profilePage();
     }
 
     @Then("upload the resume and headline")
@@ -55,7 +49,25 @@ public class StepDefinition_Login {
     @Then("update employment")
     public void updateEmployment() throws InterruptedException {
         employmentUpdate = new EmploymentUpdate(Base.driver);
-       employmentUpdate.updateEmployment();
+       // employmentUpdate.updateEmployment();
+    }
+    @Then("upload Resume")
+    public void uploadResume() {
+        resumeUpload = new ResumeUpload(Base.driver);
+        String filePath = "C:\\Users\\mohan\\Downloads\\Mohanapriya Mathiyalagan_5yrs_9months.pdf";
+        resumeUpload.uploadResume(filePath);
+    }
+
+    @Then("profile Summary")
+    public void profileSummary(){
+        profileSummary = new ProfileSummary(Base.driver);
+       // profileSummary.profileSummary();
+    }
+
+    @Then("upload Photo")
+    public void uploadPhoto(){
+        uploadPhoto = new UploadPhoto(Base.driver);
+       // uploadPhoto.uploadPhoto();
     }
 
 }

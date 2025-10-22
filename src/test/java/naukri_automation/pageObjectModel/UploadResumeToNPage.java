@@ -1,5 +1,6 @@
 package naukri_automation.pageObjectModel;
 
+import naukri_automation.factory.Base;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class UploadResumeToNPage {
+public class UploadResumeToNPage extends Base {
 
-    WebDriver driver;
     @FindBy(xpath = "//*[@id=\"root\"]/div/div/span/div/div/div/div/div/div[2]/div[1]/div/div/ul/li[2]/a")
     WebElement uploadResume;
 

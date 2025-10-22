@@ -12,9 +12,8 @@ import java.io.IOException;
 import java.time.Duration;
 
 
-public class LoginPage {
+public class LoginPage extends Base {
 
-    WebDriver driver;
 
 
    @FindBy(id = "login_Layer")

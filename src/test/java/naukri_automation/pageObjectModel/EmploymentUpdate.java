@@ -1,5 +1,6 @@
 package naukri_automation.pageObjectModel;
 
+import naukri_automation.factory.Base;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -14,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmploymentUpdate {
+public class EmploymentUpdate extends Base {
 
-    private final WebDriver driver;
+
     @FindBy(xpath = "/html/body/main/div/div/div[3]/div/div[3]/div[2]/a")
     WebElement completeProfile;
 
@@ -98,8 +99,7 @@ public class EmploymentUpdate {
         if (skills.isEmpty()) {
             WebElement input = driver.findElement(By.id("keySkillSugg"));
             input.sendKeys(skillToAdd);
-
-            driver.findElement(By.xpath("//li[@class='sugTouple']//div[normalize-space(text())='Selenium']")).click();
+             driver.findElement(By.xpath("//li[@class='sugTouple']//div[normalize-space(text())='Selenium']")).click();
             System.out.println(skillToAdd + " added successfully.");
         } else {
             System.out.println(skillToAdd + " is already present.");
@@ -115,4 +115,5 @@ public class EmploymentUpdate {
         driver.findElement(By.id("submitEmployment")).click();
     }
 }
+
 
