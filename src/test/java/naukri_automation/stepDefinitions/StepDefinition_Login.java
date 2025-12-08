@@ -19,6 +19,7 @@ public class StepDefinition_Login {
     ResumeUpload resumeUpload;
     ProfileSummary profileSummary;
     UploadPhoto uploadPhoto;
+    AddLanguages addLanguages;
 
     @Given("login to naukri page with username n password")
     public void loginPage() throws IOException {
@@ -55,7 +56,7 @@ public class StepDefinition_Login {
     public void uploadResume() {
         resumeUpload = new ResumeUpload(Base.driver);
         String filePath = "C:\\Users\\mohan\\Downloads\\Mohanapriya Mathiyalagan_5yrs_9months.pdf";
-        resumeUpload.uploadResume(filePath);
+     //   resumeUpload.uploadResume(filePath);
     }
 
     @Then("profile Summary")
@@ -68,6 +69,12 @@ public class StepDefinition_Login {
     public void uploadPhoto(){
         uploadPhoto = new UploadPhoto(Base.driver);
        // uploadPhoto.uploadPhoto();
+    }
+    @Then("Add Languages")
+    public void addLanguages(){
+        addLanguages = new AddLanguages(Base.driver);
+        addLanguages.addLanguages();
+
     }
 
 }

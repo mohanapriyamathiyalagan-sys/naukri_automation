@@ -7,5 +7,6 @@ Feature: Naukri whole Functionality
     Then upload Resume
     Then profile Summary
     Then upload Photo
+    Then Add Languages
 
 
